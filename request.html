@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blood Donation Portal - Ask for Blood</title>
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <header>
+    <div class="logo">
+      <i class="fa-solid fa-droplet"></i>
+      <span>LifeFlow</span>
+    </div>
+    <nav>
+      <ul>
+        <li><a href="index.html"><i class="fa-solid fa-chart-line"></i> Dashboard</a></li>
+        <li><a href="register.html"><i class="fa-solid fa-user-plus"></i> Register Donor</a></li>
+        <li><a href="request.html" class="active"><i class="fa-solid fa-hand-holding-heart"></i> Ask for Blood</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Main Container -->
+  <main>
+
+    <!-- Header Banner -->
+    <div class="page-header">
+      <h1>Request Emergency Blood 🆘</h1>
+      <p>Submit blood requirements for patients in urgent need. Registered donors nearby will be notified.</p>
+    </div>
+
+    <!-- Alert Notification -->
+    <div id="success-alert" class="alert-success">
+      <i class="fa-solid fa-circle-check fa-lg"></i>
+      <div>
+        <strong>Blood Request Posted Successfully!</strong>
+        <p style="font-size: 0.85rem;">Your request is now live for registered donors to see.</p>
+      </div>
+    </div>
+
+    <!-- Main Content Grid -->
+    <div class="request-grid">
+
+      <!-- Left Side: Request Form -->
+      <div class="card">
+        <div class="card-title">
+          <i class="fa-solid fa-clipboard-list"></i> Blood Request Details
+        </div>
+
+        <form id="requestForm">
+          <div class="form-grid">
+            
+            <div class="form-group">
+              <label for="patientName">Patient Name *</label>
+              <input type="text" id="patientName" placeholder="e.g., Rajesh Sharma" required>
+            </div>
+
+            <div class="form-group">
+              <label for="bloodGroup">Required Blood Group *</label>
+              <select id="bloodGroup" required>
+                <option value="">-- Select Blood Group --</option>
+                <option value="A+">A+</option>
+                <option value="A-">A-</option>
+                <option value="B+">B+</option>
+                <option value="B-">B-</option>
+                <option value="O+">O+</option>
+                <option value="O-">O-</option>
+                <option value="AB+">AB+</option>
+                <option value="AB-">AB-</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="units">Units Required *</label>
+              <input type="number" id="units" min="1" max="10" value="1" required>
+            </div>
+
+            <div class="form-group">
+              <label for="urgency">Urgency Level *</label>
+              <select id="urgency" required>
+                <option value="High (Within 6 hours)">High (Within 6 hours)</option>
+                <option value="Medium (Within 24 hours)">Medium (Within 24 hours)</option>
+                <option value="Normal (Planned)">Normal (Planned)</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="hospital">Hospital / Blood Bank Name *</label>
+              <input type="text" id="hospital" placeholder="e.g., City Hospital" required>
+            </div>
+
+            <div class="form-group">
+              <label for="city">City / Location *</label>
+              <input type="text" id="city" placeholder="e.g., Bhagalpur" required>
+            </div>
+
+            <div class="form-group">
+              <label for="contactPerson">Contact Person Name *</label>
+              <input type="text" id="contactPerson" placeholder="e.g., Ankit Verma" required>
+            </div>
+
+            <div class="form-group">
+              <label for="contactPhone">Contact Phone Number *</label>
+              <input type="tel" id="contactPhone" placeholder="e.g., +91 9876543210" required>
+            </div>
+
+            <div class="form-group full-width">
+              <label for="notes">Additional Medical Notes (Optional)</label>
+              <textarea id="notes" rows="3" placeholder="Specify hospital ward, bed number, or condition details..."></textarea>
+            </div>
+
+          </div>
+
+          <button type="submit" class="btn-submit">
+            <i class="fa-solid fa-bullhorn"></i> Post Emergency Request
+          </button>
+        </form>
+      </div>
+
+      <!-- Right Side: Active Blood Requests Feed -->
+      <div>
+        <div class="card">
+          <div class="card-title">
+            <i class="fa-solid fa-heart-pulse"></i> Live Emergency Requests
+          </div>
+
+          <div id="requestsContainer" class="requests-list">
+            <!-- Dynamic blood requests inserted via JS -->
+          </div>
+
+          <!-- Emergency Banner -->
+          <div class="emergency-banner">
+            <h4><i class="fa-solid fa-phone"></i> 24/7 National Emergency</h4>
+            <p>Call <strong>108</strong> for Immediate Ambulance Service</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blood Donation Portal - Dashboard</title>
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Navigation -->
+  <header>
+    <div class="logo">
+      <i class="fa-solid => fa-droplet"></i>
+      <span>BloodLife Foundation</span>
+    </div>
+    <nav>
+      <ul>
+        <li><a href="index.html" class="active"><i class="fa-solid fa-chart-line"></i> Dashboard</a></li>
+        <li><a href="register.html"><i class="fa-solid fa-user-plus"></i> Register Donor</a></li>
+        <li><a href="request.html"><i class="fa-solid fa-hand-holding-heart"></i> Ask for Blood</a></li>
+        
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Main Content Container -->
+  <main>
+    
+    <!-- Hero Banner -->
+    <div class="hero-card">
+      <h1>Welcome back, Administrator! 👋</h1>
+      <p>Manage blood donor records, track emergency requests, and explore real-time availability.</p>
+    </div>
+
+    <!-- Key Statistics Grid -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-icon"><i class="fa-solid fa-users"></i></div>
+        <div class="stat-info">
+          <h3 id="stat-donors">24</h3>
+          <p>Total Registered Donors</p>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon"><i class="fa-solid fa-hand-holding-droplet"></i></div>
+        <div class="stat-info">
+          <h3 id="stat-requests">8</h3>
+          <p>Active Requests</p>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon"><i class="fa-solid fa-square-check"></i></div>
+        <div class="stat-info">
+          <h3>15</h3>
+          <p>Successful Matches</p>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon"><i class="fa-solid fa-hospital"></i></div>
+        <div class="stat-info">
+          <h3>4</h3>
+          <p>Partner Blood Banks</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Dashboard Content Grid -->
+    <div class="dashboard-grid">
+      
+      <!-- Left Column: Main Features -->
+      <div>
+        
+        <!-- Random Facts Section -->
+        <div class="card facts-card">
+          <div class="card-title">
+            <i class="fa-solid fa-lightbulb"></i> Did You Know? (Random Blood Facts)
+          </div>
+          <div class="fact-box">
+            <p id="fact-text">Loading blood fact...</p>
+          </div>
+          <button class="btn-fact" id="next-fact-btn">
+            <i class="fa-solid fa-rotate"></i> Show Another Fact
+          </button>
+        </div>
+
+        <!-- Recent Activity Feed -->
+        <div class="card">
+          <div class="card-title">
+            <i class="fa-solid fa-clock-rotate-left"></i> Recent Activity
+          </div>
+          <ul class="activity-list">
+            <li class="activity-item">
+              <span><strong>Sahil Kumar</strong> registered as a new donor (O+)</span>
+              <span class="badge">New Donor</span>
+            </li>
+            <li class="activity-item">
+              <span>Urgent request posted for <strong>B- Blood Group</strong></span>
+              <span class="badge urgent">Urgent</span>
+            </li>
+            <li class="activity-item">
+              <span>Ankit Sharma updated availability status to <strong>Available</strong></span>
+              <span class="badge">Updated</span>
+            </li>
+            <li class="activity-item">
+              <span>Request #102 successfully completed</span>
+              <span class="badge">Completed</span>
+            </li>
+          </ul>
+        </div>
+
+      </div>
+
+      <!-- Right Column: Quick Links & Summary -->
+      <div>
+        
+        <!-- Quick Actions -->
+        <div class="card">
+          <div class="card-title">
+            <i class="fa-solid fa-bolt"></i> Quick Actions
+          </div>
+          <div class="actions-grid">
+            <a href="register.html" class="action-btn">
+              <i class="fa-solid fa-user-plus fa-lg"></i>
+              Add Donor
+            </a>
+            <a href="request.html" class="action-btn">
+              <i class="fa-solid fa-triangle-exclamation fa-lg"></i>
+              Ask Blood
+            </a>
+          </div>
+        </div>
+
+        <!-- Blood Group Availability Summary -->
+        <div class="card">
+          <div class="card-title">
+            <i class="fa-solid fa-layer-group"></i> Group Summary
+          </div>
+          <ul class="activity-list">
+            <li class="activity-item">
+              <span><strong>O+ Positive</strong></span>
+              <span>8 Donors</span>
+            </li>
+            <li class="activity-item">
+              <span><strong>A+ Positive</strong></span>
+              <span>5 Donors</span>
+            </li>
+            <li class="activity-item">
+              <span><strong>B+ Positive</strong></span>
+              <span>6 Donors</span>
+            </li>
+            <li class="activity-item">
+              <span><strong>AB+ Positive</strong></span>
+              <span>3 Donors</span>
+            </li>
+            <li class="activity-item">
+              <span><strong>Rare Groups (O-, AB-, A-, B-)</strong></span>
+              <span>2 Donors</span>
+            </li>
+          </ul>
+        </div>
+
+      </div>
+
+    </div>
+
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
