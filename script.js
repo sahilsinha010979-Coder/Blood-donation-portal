@@ -34,19 +34,11 @@ document.addEventListener("DOMContentLoaded", () => {
       "An average adult body contains about 5 liters of blood."
     ];
 
-    async function fetchRandomFact() {
-      try {
-        factTextElement.style.opacity = "0.5";
-        const response = await fetch(FACT_API_URL);
-        if (!response.ok) throw new Error("API Offline");
-        const data = await response.json();
-        factTextElement.textContent = data.text;
-      } catch (err) {
+    function fetchRandomFact() {
+      for (fact of localBloodFacts){
         const randomIndex = Math.floor(Math.random() * localBloodFacts.length);
-        factTextElement.textContent = localBloodFacts[randomIndex];
-      } finally {
-        factTextElement.style.opacity = "1";
-      }
+        factTextElement.innerText = localBloodFacts[randomIndex]
+        }
     }
 
     fetchRandomFact();
