@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blood Donation Portal - Ask for Blood</title>
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <style>
+    /* Global & Red Theme Variables */
+    :root {
+      --primary: #dc2626;      /* Primary Red */
+      --primary-dark: #991b1b; /* Dark Crimson */
+      --primary-light: #fef2f2;/* Light Red Tint */
+      --accent: #ef4444;       /* Bright Red */
+      --bg-color: #f8fafc;    /* Soft Light Gray BG */
+      --card-bg: #ffffff;      /* White Card BG */
+      --text-main: #1f2937;    /* Main Text */
+      --text-muted: #6b7280;   /* Muted Text */
+      --border-color: #fee2e2; /* Red Border Tint */
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      line-height: 1.6;
+    }
+
+    /* Navigation Bar */
+    header {
+      background-color: var(--primary-dark);
+      color: white;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+
+    .logo i {
+      color: var(--accent);
+    }
+
+    nav ul {
+      display: flex;
+      list-style: none;
+      gap: 1.5rem;
+    }
+
+    nav a {
+      color: #fca5a5;
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s ease;
+    }
+
+    nav a.active, nav a:hover {
+      color: white;
+    }
+
+    /* Main Container */
+    main {
+      max-width: 1100px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+    }
+
+    /* Page Banner Header */
+    .page-header {
+      background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+      color: white;
+      padding: 1.75rem 2rem;
+      border-radius: 12px;
+      margin-bottom: 2rem;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    }
+
+    .page-header h1 {
+      font-size: 1.8rem;
+      margin-bottom: 0.25rem;
+    }
+
+    /* Grid Layout: Form vs Active Requests */
+    .request-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 1.5rem;
+    }
+
+    @media (max-width: 850px) {
+      .request-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Form & Container Cards */
+    .card {
+      background-color: var(--card-bg);
+      border-radius: 12px;
+      padding: 1.75rem;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+      border: 1px solid var(--border-color);
+      margin-bottom: 1.5rem;
+    }
+
+    .card-title {
+      font-size: 1.2rem;
+      color: var(--primary-dark);
+      margin-bottom: 1.25rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid var(--primary-light);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.25rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+
+    .form-group.full-width {
+      grid-column: 1 / -1;
+    }
+
+    label {
+      font-weight: 600;
+      font-size: 0.9rem;
+      color: var(--text-main);
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 0.75rem;
+      border: 1px solid #d1d5db;
+      border-radius: 6px;
+      font-size: 0.95rem;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.15);
+    }
+
+    /* Submit Button */
+    .btn-submit {
+      background-color: var(--primary);
+      color: white;
+      border: none;
+      padding: 0.85rem 1.75rem;
+      font-size: 1rem;
+      font-weight: 600;
+      border-radius: 6px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      width: 100%;
+      transition: background-color 0.2s ease;
+    }
+
+    .btn-submit:hover {
+      background-color: var(--primary-dark);
+    }
+
+    /* Alert Banner */
+    .alert-success {
+      display: none;
+      background-color: #def7ec;
+      color: #03543f;
+      border: 1px solid #84e1bc;
+      padding: 1rem;
+      border-radius: 8px;
+      margin-bottom: 1.5rem;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    /* Request Cards List */
+    .requests-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      max-height: 520px;
+      overflow-y: auto;
+      padding-right: 0.25rem;
+    }
+
+    .request-item-card {
+      background: var(--primary-light);
+      border-left: 4px solid var(--primary);
+      border-radius: 8px;
+      padding: 1rem;
+      position: relative;
+    }
+
+    .request-item-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.5rem;
+    }
+
+    .blood-badge {
+      background-color: var(--primary);
+      color: white;
+      font-weight: bold;
+      padding: 0.2rem 0.6rem;
+      border-radius: 4px;
+      font-size: 0.9rem;
+    }
+
+    .urgency-tag {
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      padding: 0.2rem 0.5rem;
+      border-radius: 12px;
+    }
+
+    .urgency-high {
+      background-color: #fde8e8;
+      color: #9b1c1c;
+      border: 1px solid #f8b4b4;
+    }
+
+    .urgency-medium {
+      background-color: #fef3c7;
+      color: #92400e;
+      border: 1px solid #fde68a;
+    }
+
+    .request-details {
+      font-size: 0.875rem;
+      color: #374151;
+    }
+
+    .request-details p {
+      margin-bottom: 0.25rem;
+    }
+
+    /* Emergency Helpline Banner */
+    .emergency-banner {
+      background: #7f1d1d;
+      color: white;
+      padding: 1rem;
+      border-radius: 8px;
+      text-align: center;
+      margin-top: 1rem;
+    }
+
+    .emergency-banner h4 {
+      font-size: 1.1rem;
+      margin-bottom: 0.25rem;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <header>
+    <div class="logo">
+      <i class="fa-solid fa-droplet"></i>
+      <span>LifeFlow</span>
+    </div>
+    <nav>
+      <ul>
+        <li><a href="index.html"><i class="fa-solid fa-chart-line"></i> Dashboard</a></li>
+        <li><a href="register.html"><i class="fa-solid fa-user-plus"></i> Register Donor</a></li>
+        <li><a href="request.html" class="active"><i class="fa-solid fa-hand-holding-heart"></i> Ask for Blood</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Main Container -->
+  <main>
+
+    <!-- Header Banner -->
+    <div class="page-header">
+      <h1>Request Emergency Blood 🆘</h1>
+      <p>Submit blood requirements for patients in urgent need. Registered donors nearby will be notified.</p>
+    </div>
+
+    <!-- Alert Notification -->
+    <div id="success-alert" class="alert-success">
+      <i class="fa-solid fa-circle-check fa-lg"></i>
+      <div>
+        <strong>Blood Request Posted Successfully!</strong>
+        <p style="font-size: 0.85rem;">Your request is now live for registered donors to see.</p>
+      </div>
+    </div>
+
+    <!-- Main Content Grid -->
+    <div class="request-grid">
+
+      <!-- Left Side: Request Form -->
+      <div class="card">
+        <div class="card-title">
+          <i class="fa-solid fa-clipboard-list"></i> Blood Request Details
+        </div>
+
+        <form id="requestForm">
+          <div class="form-grid">
+            
+            <div class="form-group">
+              <label for="patientName">Patient Name *</label>
+              <input type="text" id="patientName" placeholder="e.g., Rajesh Sharma" required>
+            </div>
+
+            <div class="form-group">
+              <label for="bloodGroup">Required Blood Group *</label>
+              <select id="bloodGroup" required>
+                <option value="">-- Select Blood Group --</option>
+                <option value="A+">A+</option>
+                <option value="A-">A-</option>
+                <option value="B+">B+</option>
+                <option value="B-">B-</option>
+                <option value="O+">O+</option>
+                <option value="O-">O-</option>
+                <option value="AB+">AB+</option>
+                <option value="AB-">AB-</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="units">Units Required *</label>
+              <input type="number" id="units" min="1" max="10" value="1" required>
+            </div>
+
+            <div class="form-group">
+              <label for="urgency">Urgency Level *</label>
+              <select id="urgency" required>
+                <option value="High (Within 6 hours)">High (Within 6 hours)</option>
+                <option value="Medium (Within 24 hours)">Medium (Within 24 hours)</option>
+                <option value="Normal (Planned)">Normal (Planned)</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="hospital">Hospital / Blood Bank Name *</label>
+              <input type="text" id="hospital" placeholder="e.g., City Hospital" required>
+            </div>
+
+            <div class="form-group">
+              <label for="city">City / Location *</label>
+              <input type="text" id="city" placeholder="e.g., Bhagalpur" required>
+            </div>
+
+            <div class="form-group">
+              <label for="contactPerson">Contact Person Name *</label>
+              <input type="text" id="contactPerson" placeholder="e.g., Ankit Verma" required>
+            </div>
+
+            <div class="form-group">
+              <label for="contactPhone">Contact Phone Number *</label>
+              <input type="tel" id="contactPhone" placeholder="e.g., +91 9876543210" required>
+            </div>
+
+            <div class="form-group full-width">
+              <label for="notes">Additional Medical Notes (Optional)</label>
+              <textarea id="notes" rows="3" placeholder="Specify hospital ward, bed number, or condition details..."></textarea>
+            </div>
+
+          </div>
+
+          <button type="submit" class="btn-submit">
+            <i class="fa-solid fa-bullhorn"></i> Post Emergency Request
+          </button>
+        </form>
+      </div>
+
+      <!-- Right Side: Active Blood Requests Feed -->
+      <div>
+        <div class="card">
+          <div class="card-title">
+            <i class="fa-solid fa-heart-pulse"></i> Live Emergency Requests
+          </div>
+
+          <div id="requestsContainer" class="requests-list">
+            <!-- Dynamic blood requests inserted via JS -->
+          </div>
+
+          <!-- Emergency Banner -->
+          <div class="emergency-banner">
+            <h4><i class="fa-solid fa-phone"></i> 24/7 National Emergency</h4>
+            <p>Call <strong>108</strong> for Immediate Ambulance Service</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </main>
+
+  <script>
+    // Initial Mock Requests
+    const initialRequests = [
+      {
+        id: 1,
+        patientName: "Ramesh Singh",
+        bloodGroup: "B-",
+        units: 2,
+        hospital: "Sadar Hospital",
+        city: "Bhagalpur",
+        contactPerson: "Priya Singh",
+        contactPhone: "+91 9123456789",
+        urgency: "High (Within 6 hours)"
+      },
+      {
+        id: 2,
+        patientName: "Ananya Roy",
+        bloodGroup: "O-",
+        units: 1,
+        hospital: "Metro Medical Center",
+        city: "Patna",
+        contactPerson: "Suresh Roy",
+        contactPhone: "+91 9876543211",
+        urgency: "Medium (Within 24 hours)"
+      }
+    ];
+
+    document.addEventListener("DOMContentLoaded", () => {
+      const requestForm = document.getElementById("requestForm");
+      const successAlert = document.getElementById("success-alert");
+      const requestsContainer = document.getElementById("requestsContainer");
+
+      // Retrieve or initialize blood requests from localStorage
+      let bloodRequests = JSON.parse(localStorage.getItem("bloodRequests"));
+      if (!bloodRequests || bloodRequests.length === 0) {
+        bloodRequests = initialRequests;
+        localStorage.setItem("bloodRequests", JSON.stringify(bloodRequests));
+      }
+
+      // Render Active Requests
+      function renderRequests() {
+        requestsContainer.innerHTML = "";
+
+        if (bloodRequests.length === 0) {
+          requestsContainer.innerHTML = "<p style='text-align:center; color: #6b7280; margin: 1rem 0;'>No active emergency requests right now.</p>";
+          return;
+        }
+
+        bloodRequests.forEach(req => {
+          const isHighUrgency = req.urgency.includes("High");
+          const card = document.createElement("div");
+          card.className = "request-item-card";
+
+          card.innerHTML = `
+            <div class="request-item-header">
+              <span class="blood-badge"><i class="fa-solid fa-droplet"></i> Need ${req.bloodGroup}</span>
+              <span class="urgency-tag ${isHighUrgency ? 'urgency-high' : 'urgency-medium'}">${req.urgency.split(' ')[0]}</span>
+            </div>
+            <div class="request-details">
+              <p><strong>Patient:</strong> ${req.patientName} (${req.units} Unit${req.units > 1 ? 's' : ''})</p>
+              <p><strong>Hospital:</strong> ${req.hospital}, ${req.city}</p>
+              <p><strong>Contact:</strong> ${req.contactPerson} (<a href="tel:${req.contactPhone}" style="color: var(--primary); text-decoration: none;">${req.contactPhone}</a>)</p>
+            </div>
+          `;
+
+          requestsContainer.appendChild(card);
+        });
+      }
+
+      // Initial Render
+      renderRequests();
+
+      // Handle Form Submission
+      requestForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+
+        const newRequest = {
+          id: Date.now(),
+          patientName: document.getElementById("patientName").value.trim(),
+          bloodGroup: document.getElementById("bloodGroup").value,
+          units: document.getElementById("units").value,
+          urgency: document.getElementById("urgency").value,
+          hospital: document.getElementById("hospital").value.trim(),
+          city: document.getElementById("city").value.trim(),
+          contactPerson: document.getElementById("contactPerson").value.trim(),
+          contactPhone: document.getElementById("contactPhone").value.trim(),
+          notes: document.getElementById("notes").value.trim()
+        };
+
+        // Add to array and save to localStorage
+        bloodRequests.unshift(newRequest);
+        localStorage.setItem("bloodRequests", JSON.stringify(bloodRequests));
+
+        // Re-render requests feed
+        renderRequests();
+
+        // Show Success Alert
+        successAlert.style.display = "flex";
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+
+        // Reset form fields
+        requestForm.reset();
+
+        // Auto hide success alert
+        setTimeout(() => {
+          successAlert.style.display = "none";
+        }, 5000);
+      });
+    });
+  </script>
+</body>
+</html>
